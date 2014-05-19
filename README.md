@@ -20,4 +20,4 @@ NOTE: Requires .NET 2.0 Framework!
 Building
 ===============
 Project was created using Visual Studio 2013 Professional RC2
-using C# - .NET 2.0 Framework. Recommend similar environemnt.
+using C# - .NET 2.0 Framework. Recommend similar environment.
