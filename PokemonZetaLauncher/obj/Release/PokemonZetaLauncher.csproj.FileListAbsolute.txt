@@ -1,0 +1,4 @@
+c:\users\brian\documents\visual studio 2013\Projects\PokemonZetaLauncher\PokemonZetaLauncher\bin\Release\PokemonZetaLauncher.exe
+c:\users\brian\documents\visual studio 2013\Projects\PokemonZetaLauncher\PokemonZetaLauncher\bin\Release\PokemonZetaLauncher.pdb
+c:\users\brian\documents\visual studio 2013\Projects\PokemonZetaLauncher\PokemonZetaLauncher\obj\Release\PokemonZetaLauncher.exe
+c:\users\brian\documents\visual studio 2013\Projects\PokemonZetaLauncher\PokemonZetaLauncher\obj\Release\PokemonZetaLauncher.pdb
