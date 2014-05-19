@@ -14,7 +14,7 @@ NOTE: Requires .NET 2.0 Framework!
 
 	-- For example, my Target box would read 
 	
-		--- "Z:\Downloads\Pokemon Zeta 1.4 (Win)\PokemonZetaLauncher.exe" "C:\Users\Brian\Saved Games\Pokemon Zeta" "C:\Users\Brian\Dropbox\Pokemon Zeta"
+		"Z:\Downloads\Pokemon Zeta 1.4 (Win)\PokemonZetaLauncher.exe" "C:\Users\Brian\Saved Games\Pokemon Zeta" "C:\Users\Brian\Dropbox\Pokemon Zeta"
 - Double click the shortcut and play the game!
 
 Building
