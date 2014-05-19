@@ -91,8 +91,7 @@ namespace PokemonZetaLauncher
                     catch (IOException e)
                     {
                         Console.WriteLine("File exists, attempting overwrite...");
-                        File.Delete(to);
-                        File.Copy(file, to);
+                        File.Copy(file, to, true);
                         Console.WriteLine("Success!");
                     }
                     catch (Exception e)
