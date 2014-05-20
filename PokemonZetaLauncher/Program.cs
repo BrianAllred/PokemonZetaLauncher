@@ -31,11 +31,28 @@
 using System;
 using System.IO;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace PokemonZetaLauncher
 {
     class Program
     {
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct FLASHWINFO
+        {
+            public UInt32 cbSize;
+            public IntPtr hwnd;
+            public UInt32 dwFlags;
+            public UInt32 uCount;
+            public Int32 dwTimeout;
+        }
+
+        public const UInt32 FLASHW_ALL = 3;
+
         //flag to catch errors
         static bool _error;
         static void Main(string[] args)
@@ -65,13 +82,15 @@ namespace PokemonZetaLauncher
             //so the user can see problems
             if (_error)
             {
-                Console.WriteLine("Press any key to continue...");
+                FlashWindow(Process.GetCurrentProcess().MainWindowHandle);
+                Console.WriteLine("\nError occurred! Check output!\nPress any key to continue...");
                 Console.ReadKey();
             }
         }
 
         /// <summary>
-        /// Copies all files that end in ".rxdata" from "fromDir" to "toDir"
+        /// Copies all files that end in ".rxdata" from "fromDir" to "toDir",
+        /// checking modified time first
         /// </summary>
         /// <param name="fromDir"></param>
         /// <param name="toDir"></param>
@@ -82,6 +101,25 @@ namespace PokemonZetaLauncher
                 if (file.Contains(".rxdata"))
                 {
                     string to = Path.Combine(toDir, file.Substring(file.LastIndexOf('\\') + 1));
+                    DateTime fromTime = GetFileDate(file);
+                    DateTime toTime = GetFileDate(to);
+                    if (DateTime.Compare(fromTime, toTime) < 0)
+                    {
+                        Console.WriteLine("\nWARNING! Destination has a newer file of the same name: " + file.Substring(file.LastIndexOf('\\') + 1));
+                        string answer = "z";
+                        while (!(answer.ToLower().Equals("y") || answer.ToLower().Equals("n") || answer.Equals("")))
+                        {
+                            FlashWindow(Process.GetCurrentProcess().MainWindowHandle);
+                            Console.Write("Do you want to overwrite anyway (y/N)? ");
+                            answer = Console.ReadLine();
+                        }
+
+                        if (answer.Equals("n") || answer.Equals(""))
+                        {
+                            Console.WriteLine(file.Substring(file.LastIndexOf('\\') + 1) + " skipped.");
+                            continue;
+                        }
+                    }
                     try
                     {
                         Console.WriteLine("Copying " + file + " to " + to);
@@ -96,8 +134,11 @@ namespace PokemonZetaLauncher
                     }
                     catch (Exception e)
                     {
+                        Console.WriteLine();
                         Console.WriteLine(e.ToString());
+                        Console.WriteLine();
                         _error = true;
+                        
                     }
                 }
             }
@@ -116,9 +157,40 @@ namespace PokemonZetaLauncher
             }
             catch (Exception e)
             {
+                Console.WriteLine();
                 Console.WriteLine(e.ToString());
+                Console.WriteLine();
                 _error = true;
             }
+        }
+
+        /// <summary>
+        /// Returns correct local DateTime of filename
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        static DateTime GetFileDate(string filename)
+        {
+            DateTime now = DateTime.Now;
+            TimeSpan localOffset = now - now.ToUniversalTime();
+            return File.GetLastWriteTimeUtc(filename) + localOffset;
+        }
+
+        /// <summary>
+        /// Used to flash console window
+        /// </summary>
+        /// <param name="hWnd"></param>
+        private static void FlashWindow(IntPtr hWnd)
+        {
+            var fInfo = new FLASHWINFO();
+
+            fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo));
+            fInfo.hwnd = hWnd;
+            fInfo.dwFlags = FLASHW_ALL;
+            fInfo.uCount = UInt32.MaxValue;
+            fInfo.dwTimeout = 0;
+
+            FlashWindowEx(ref fInfo);
         }
     }
 }

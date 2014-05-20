@@ -7,3 +7,4 @@ C:\Users\Brian\Documents\GitHub\PokemonZetaLauncher\PokemonZetaLauncher\obj\Rele
 C:\Users\Brian\Documents\GitHub\PokemonZetaLauncher\PokemonZetaLauncher\bin\Release\PokemonZetaLauncher.exe
 C:\Users\Brian\Documents\GitHub\PokemonZetaLauncher\PokemonZetaLauncher\bin\Release\PokemonZetaLauncher.pdb
 C:\Users\Brian\Documents\GitHub\PokemonZetaLauncher\PokemonZetaLauncher\obj\Release\PokemonZetaLauncher.csprojResolveAssemblyReference.cache
+C:\Users\Brian\documents\visual studio 2013\Projects\PokemonZetaLauncher\PokemonZetaLauncher\obj\Release\PokemonZetaLauncher.csprojResolveAssemblyReference.cache
